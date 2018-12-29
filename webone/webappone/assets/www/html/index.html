@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				font-family: 楷体;
+				font-size: 0.8rem;
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color:#7FFFD4;
+			}
+			
+			.header {
+				width: 100%;
+				height: 8%;
+				background-color: burlywood;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.base {
+				width: 100%;
+				height: 85%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+			.cell{
+				width: 80px;
+				height: 80px;
+				border: 2px  solid  #7FFFD4;
+				margin: 5px;
+				border-radius: 5px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			.footer {
+				width: 100%;
+				height: 7%;
+				background-color: burlywood;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.imgs{
+			width:60px;
+     height:60px;
+     display:flex;
+        justify-content: center;
+	align-items: center;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="header">
+             美食狂欢节
+		</div>
+		<div class="base">
+		 <div class="topview">
+		 	<img  src="../img/meishi.jpg"  width="100%"  height="100%"/>
+		 </div>
+			
+
+		</div>
+		<div class="footer">
+            美食天地任你我行
+		</div>
+	</body>
+<script type="text/javascript">
+  var  baseObj= document.getElementsByClassName("base")[0];
+function UrlSearch()
+{
+	
+	//decodeURI location.search-->
+	var url =decodeURI(location.search);
+	alert(url);
+	
+	var  str=url.substr(url.indexOf("=")+1);
+    alert(str);
+    
+    //字符串转换成json
+    var datas=JSON.parse(str);
+    
+    alert(datas.length);
+    
+    datas.forEach(function(value,index){
+	
+	    //alert(value["cname"]);
+	   var  divObj= document.createElement("div");
+	   divObj.className="cell";
+	   divObj.setAttribute("onclick","forward('"+value["curl"]+"')")
+	   divObj.innerText=value["cname"];
+	   baseObj.appendChild(divObj);
+	   alert(value["imgpath"]);
+	   var imgObj=document.createElement("img");
+	   imgObj.className="imgs";
+	   imgObj.setAttribute("src",value["imgpath"]);
+	   
+	   divObj.appendChild(imgObj);
+	  
+
+	   
+    });
+    
+	
+}
+UrlSearch();
+
+function forward(id)
+{
+	
+    window.location.href=id;
+	
+}
+</script>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<style type="text/css">
+			* {
+				margin: 0px;
+				font-family: 楷体;
+				
+			}
+			
+			.circle {
+                    
+                    border-radius: 100%; 
+                     height: 110px; 
+                     width: 110px; 
+                     opacity: 0.8;
+                      
+                     }
+			body {
+				width: 100%;
+				height: 100vh;
+				background-image:url("../img/1.jpg");
+				
+			}
+			
+			.header {
+				width: 100%;
+				height: 35%;
+				
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.base {
+				width: 100%;
+				height: 62%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+			
+		
+		.loginview{
+			
+			width: 70%;
+			height: 55%;
+
+			display: flex;
+			flex-direction: column;
+				justify-content: center;
+							align-items: center;
+							
+		}
+		.cell{
+			width: 75%;
+			height: 20%;
+			
+			margin: 5px;
+			opacity:0.7;
+			display: flex;
+				justify-content: center;
+							align-items: center;
+		}
+		.cell1{
+			width: 75%;
+			height: 20%;
+			
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+		
+		
+		.i1{
+		text-align: center;
+			width:100%;
+			height:70%;
+			border-radius: 15px;
+			border: 10px;
+		}
+		.i2
+		{
+		text-align: center;
+			width:100%;
+			height:70%;
+			border-radius: 15px;
+			border: 10px;
+		}
+		.i3{
+		text-align: center;
+			width:50%;
+			height:70%;
+			border-radius: 15px;
+			background-color: burlywood;
+			border: 10px;
+		}
+		.i4
+		{
+			font-size: 11px;
+			margin: 7px;
+			opacity:0.5;
+			
+		}
+		
+			
+		</style>
+	</head>
+	<body>
+		<div class="header">
+           
+           	<img class="circle" src="../img/m6.jpg" />
+           
+		</div>
+		<div class="base">
+		
+	     <div class="loginview">
+	     	<div  class="cell">
+	     		<input class="i1"  type="text"  id="username"  placeholder="用户名/手机号/邮箱:" />
+	     	</div>
+	     	<div class="cell">
+	     		<input class="i2"   type="password"  id="userpwd"  placeholder="用户密码:" />
+	     	</div>
+	     	<div class="cell">
+	     			<input class="i3"  type="button"  value="用户登录"  id="userlogin"/>
+	     	</div>
+	     	<div class="cell1">
+	     		<div class="c1">
+	     			<input class="i4" style="color: red;" type="button"  value="忘记密码"  id="userlogin"/>
+	     			</div>
+	     			<div class="c1">
+	     			<input class="i4"  type="button" style="color: blueviolet;"  value="立即注册-->"  id="userlogin"/>
+	     			</div>
+	     	</div>
+	     </div>
+
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+	
+	   var  loginbtn=document.getElementById("userlogin");
+	   
+	   loginbtn.onclick=function()
+	   {
+		   alert("按钮被点击");
+		   var  nameObj= document.getElementById("username");
+		   var  pwdObj= document.getElementById("userpwd");
+		   
+		   alert(nameObj.value+","+pwdObj.value);
+		   
+		   //带有请求的参数  FormData
+		   var formdatas=new FormData();
+		   formdatas.append("action","login");
+		   formdatas.append("username",nameObj.value);
+		   formdatas.append("userpwd",pwdObj.value);
+		   
+		   var  options={method:"post",body:formdatas};
+		   
+		   //新一代ajax技术fetch
+		   alert(fetch);
+		   
+		   fetch("http://stswj5.natappfree.cc/user",options).then(function(response){
+			   
+			   if(response.status==200)
+			   {
+				   alert("连接成功");
+				   
+				   //接受参数
+				   response.json().then(function(data){
+					   
+					   alert(data.msg);
+					   alert(data.contentdata);
+					   alert(typeof data.contentdata);
+					   
+					   var jsondata=data.contentdata;
+				
+					   
+					   if(data.msg=="success")
+					   {
+						   //encodeURI设置编码的函数
+						   window.location.href="./index.html?params="+encodeURI(JSON.stringify(jsondata));
+					   }
+					   else
+					   {
+						   
+					   }
+				   });
+			   }
+			   
+			   
+		   }).catch(function(error){
+			   
+			   alert("连接异常"+error);
+		   });
+		   
+		   alert("end");
+		   
+	   }	
+	</script>
+</html>
