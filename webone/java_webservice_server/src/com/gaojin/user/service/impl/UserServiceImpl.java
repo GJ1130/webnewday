@@ -8,10 +8,15 @@ import javax.jws.WebService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+
+import com.gaojin.model.Classes;
 import com.gaojin.model.Menu;
+
+
 import com.gaojin.model.Role;
 import com.gaojin.model.StuAndRole;
-import com.gaojin.user.dao.DB;
+
+import com.gaojin.user.dao.DBMysql;
 import com.gaojin.user.service.interfaces.IUserService;
 
 @WebService(portName="userservice",
@@ -28,7 +33,8 @@ public class UserServiceImpl implements IUserService
 		System.out.println("UserServiceImpl is queryRoleData start....");
 		
 		
-		DB db =new DB();
+		DBMysql db =new DBMysql();
+		//db = (DB) maps.get("db");
 		
 		List<Role> lists =db.queryRoleData();
 		
@@ -54,7 +60,7 @@ public class UserServiceImpl implements IUserService
 	{
 		System.out.println("UserServiceImpl is queryRoleGroupCount start....");
 		
-		DB db =new DB();
+		DBMysql db =new DBMysql();
 		
 		List<StuAndRole> lists =db.queryRoleGroupCount();
 		
@@ -81,7 +87,7 @@ public class UserServiceImpl implements IUserService
 		
 		System.out.println("UserServiceImpl is queryStuAndKmCount start....");
 		
-		DB db =new DB();
+		DBMysql db =new DBMysql();
 		
 		String data=db.queryStuAndKmCount(name);
 		
@@ -95,7 +101,7 @@ public class UserServiceImpl implements IUserService
 		// TODO Auto-generated method stub
 		System.out.println("UserServiceImpl is queryStu start....");
 		
-		DB db =new DB();
+		DBMysql db =new DBMysql();
 		int count=db.queryStu(username, pwd);
 		
 		if(count>0)
@@ -110,13 +116,137 @@ public class UserServiceImpl implements IUserService
 	{
 		// TODO Auto-generated method stub
 		System.out.println("UserServiceImpl is queryMenuData start....");
-		DB db =new DB();
+		DBMysql db =new DBMysql();
 		
 		List<Menu> lists=db.queryMenuData();
 		
 		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
 		System.out.println("strJson--->"+strJson);
 		
+		return strJson;
+	}
+
+	@Override
+	public String queryClassToSex()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryClassToSex start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists=db.queryClassToSex();
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		
+		return strJson;
+	}
+
+	@Override
+	public String queryClassToPc()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryClassToPc start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryClassToPc();
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryAgeCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is quaryAgeCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryAgeCount();
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryNaplaceCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryNaplaceCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryNaplaceCount();
+		
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryProvCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryProvCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryProvCount();
+		
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryClaAgeCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryClaAgeCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryClaAgeCount();
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryCityCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryCityCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryCityCount();
+		
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+
+	@Override
+	public String queryClaProCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryClaProCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists =db.queryClaProCount();
+		
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Classes>-->strJson-->"+strJson);
+		return strJson;
+	}
+	
+	
+
+	@Override
+	public String queryFoodCount()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl is queryFoodCount start....");
+		DBMysql db =new DBMysql();
+		
+		List<Classes> lists=db.queryFoodCount();
+		String strJson=com.alibaba.fastjson.JSONArray.toJSONString(lists);
+		System.out.println("List<Peop>-->strJson-->"+strJson);
 		return strJson;
 	}
 

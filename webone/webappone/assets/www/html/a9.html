@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-			<style type="text/css">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<title></title>
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/rmsportal/YmDAMEQVbLJpVbKiRQVX.css" />
+<style type="text/css">
 			* {
 				margin: 0px;
 				font-family: 楷体;
@@ -13,7 +16,7 @@
 			body {
 				width: 100%;
 				height: 100vh;
-				background-color: #808080;
+			
 			}
 			
 			.header {
@@ -32,39 +35,18 @@
 				flex-wrap: wrap;
 				justify-content: center;
 				align-items: center;
+				background-image:url("../img/a9.jpg");
+				background-size:100% 100%;
+				background-repeat: no-repeat; 
 			}
-			.topview{
-				width: 80%;
-			height: 15%;
-	
+			.show
+			{
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
-		
-		.loginview{
-			
-			width: 50%;
-			height: 40%;
-
-			display: flex;
-			flex-direction: column;
-				justify-content: center;
-							align-items: center;
-							
-		}
-		.cell{
-			width: 80%;
-			height: 30%;
-			border: 1px  solid  #00FFFF;
-			margin: 5px;
-			
-			display: flex;
-				justify-content: center;
-							align-items: center;
-		}
-		input{
-			text-align: center;
-			width:100%;
-			height:100%;
-		}
 		
 			.footer {
 				width: 100%;
@@ -81,12 +63,153 @@
              美食狂欢节之冰雪奇缘
 		</div>
 		<div class="base">
-		冰雪奇缘
+			<div class="chart-wrapper"></div>
+		<canvas id="mountNode"></canvas>
+		<canvas id="mountNode1"></canvas>
 
 		</div>
 		<div class="footer">
              美食天地任你我行
 		</div>
 	</body>
+<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2-all.min.js"></script>
 
+<script src="https://gw.alipayobjects.com/os/antv/assets/lib/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+	
+alert("请求业务报表");
+
+var  formData=new FormData();
+formData.append("datas","queryclaprocount");
+
+var options={method:'post',body:formData};
+
+fetch("http://bffivv.natappfree.cc/antv",options).then(function(response){
+	  
+	  if(response.status==200)
+	  {
+		  
+		  
+		  response.json().then(function(datas){
+			  
+			  alert(datas.jsonDatas);
+			  
+			  createView(datas.jsonDatas);
+			  
+		  });
+	  }
+	  
+}).catch(function(error){
+	  
+	  
+});
+
+
+function   createView(data)
+{
+	var chart = new F2.Chart({
+		  id: 'mountNode',
+		  pixelRatio: window.devicePixelRatio
+		});
+
+		chart.source(data, {
+		  sales: {
+		    tickCount: 5
+		  }
+		});
+		chart.tooltip(false);
+		chart.interval().position('prov*count');
+		chart.render();
+
+		// 绘制柱状图文本
+		var offset = -5;
+		var canvas = chart.get('canvas');
+		var group = canvas.addGroup();
+		var shapes = {};
+		data.map(function(obj) {
+		  var point = chart.getPosition(obj);
+		  var text = group.addShape('text', {
+		    attrs: {
+		      x: point.x,
+		      y: point.y + offset,
+		      text: obj.sales,
+		      textAlign: 'center',
+		      textBaseline: 'bottom',
+		      fill: '#808080'
+		    }
+		  });
+
+		  shapes[obj.year] = text; // 缓存该 shape, 便于后续查找
+		});
+
+		var lastTextShape = void 0; // 上一个被选中的 text
+		// 配置柱状图点击交互
+		chart.interaction('interval-select', {
+		  selectAxisStyle: {
+		    fill: '#000',
+		    fontWeight: 'bold'
+		  },
+		  mode: 'range',
+		  defaultSelected: {
+		    year: '1962 年',
+		    sales: 38
+		  },
+		  onEnd: function onEnd(ev) {
+		    var data = ev.data,
+		      selected = ev.selected;
+
+		    lastTextShape && lastTextShape.attr({
+		      fill: '#808080',
+		      fontWeight: 'normal'
+		    });
+		    if (selected) {
+		      var textShape = shapes[data.year];
+		      textShape.attr({
+		        fill: '#000',
+		        fontWeight: 'bold'
+		      });
+		      lastTextShape = textShape;
+		    }
+		    canvas.draw();
+		  }
+		});
+		var chart = new F2.Chart({
+			  id: 'mountNode1',
+			  pixelRatio: window.devicePixelRatio
+			});
+			chart.source(data, {
+			  time: {
+			    type: 'timeCat',
+			    tickCount: 3,
+			    range: [0, 1]
+			  },
+			  tem: {
+			    tickCount: 5,
+			    min: 0
+			  }
+			});
+
+			chart.axis('time', {
+			  label: function label(text, index, total) {
+			    var textCfg = {};
+			    if (index === 0) {
+			      textCfg.textAlign = 'left';
+			    } else if (index === total - 1) {
+			      textCfg.textAlign = 'right';
+			    }
+			    return textCfg;
+			  }
+			});
+			chart.tooltip({
+			  showCrosshairs: true
+			});
+
+			chart.area().position('prov*count').color('l(90) 0:#1890FF 1:#f7f7f7').shape('smooth');
+			chart.line().position('prov*count').color('l(90) 0:#1890FF 1:#f7f7f7').shape('smooth');
+			chart.render();
+}
+	
+
+</script>
 </html>

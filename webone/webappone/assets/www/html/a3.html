@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-			<style type="text/css">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<title></title>
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/rmsportal/YmDAMEQVbLJpVbKiRQVX.css" />
+<style type="text/css">
 			* {
 				margin: 0px;
 				font-family: 楷体;
@@ -13,7 +16,7 @@
 			body {
 				width: 100%;
 				height: 100vh;
-				background-color: #808080;
+				
 			}
 			
 			.header {
@@ -32,39 +35,18 @@
 				flex-wrap: wrap;
 				justify-content: center;
 				align-items: center;
+				background-image:url("../img/a3.jpg");
+				background-size:100% 100%;
+				background-repeat: no-repeat; 
 			}
-			.topview{
-				width: 80%;
-			height: 15%;
-	
+			.show
+			{
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
-		
-		.loginview{
-			
-			width: 50%;
-			height: 40%;
-
-			display: flex;
-			flex-direction: column;
-				justify-content: center;
-							align-items: center;
-							
-		}
-		.cell{
-			width: 80%;
-			height: 30%;
-			border: 1px  solid  #00FFFF;
-			margin: 5px;
-			
-			display: flex;
-				justify-content: center;
-							align-items: center;
-		}
-		input{
-			text-align: center;
-			width:100%;
-			height:100%;
-		}
 		
 			.footer {
 				width: 100%;
@@ -81,12 +63,111 @@
              美食狂欢节之甜甜圈
 		</div>
 		<div class="base">
-		甜甜圈
+			<div class="chart-wrapper"></div>
+		<canvas id="mountNode"></canvas>
+		<canvas id="mountNode1"></canvas>
 
 		</div>
 		<div class="footer">
              美食天地任你我行
 		</div>
 	</body>
+<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 
+<script type="text/javascript">
+	
+alert("请求业务报表");
+
+var  formData=new FormData();
+formData.append("datas","queryagecount");
+
+var options={method:'post',body:formData};
+
+fetch("http://bffivv.natappfree.cc/antv",options).then(function(response){
+	  
+	  if(response.status==200)
+	  {
+		  
+		  
+		  response.json().then(function(datas){
+			  
+			  alert(datas.jsonDatas);
+			  
+			  createView(datas.jsonDatas);
+			  
+		  });
+	  }
+	  
+}).catch(function(error){
+	  
+	  
+});
+
+
+function   createView(data)
+{
+	var chart = new F2.Chart({
+		  id: 'mountNode',
+		  pixelRatio: window.devicePixelRatio
+		});
+
+		chart.source(data, {
+		  sales: {
+		    tickCount: 5
+		  }
+		});
+		chart.tooltip({
+		  showItemMarker: false,
+		  onShow: function onShow(ev) {
+		    var items = ev.items;
+		    items[0].name = null;
+		    items[0].name = items[0].title;
+		    items[0].value = ' ' + items[0].value;
+		  }
+		});
+
+		// 让柱状图的宽度适配不同的屏幕尺寸
+		var barWidth = 36 * (window.innerWidth / 375);
+
+		chart.interval().position('age*count').color('l(90) 0:#1890ff 1:#70cdd0') // 定义柱状图渐变色
+		  .size(barWidth);
+		chart.render();
+		 
+		 var a="1";
+			var chart=new F2.Chart({
+				id:'mountNode1',
+				pixelRatio: window.devicePixelRatio
+			});
+			
+			chart.source(data,{
+				percent:{
+					formatter:function formatter(val){
+						return val * 100 +'%';
+					}
+				}
+			});
+			chart.tooltip(false);
+			chart.coord('polar',{
+				transposed:true,
+				radius:0.85
+			});
+			chart.axis(false);
+			chart.interval().position('a*count').color('age', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0']).adjust('stack').style({
+				  lineWidth: 1,
+				  stroke: '#fff',
+				  lineJoin: 'round',
+				  lineCap: 'round'
+				}).animate({
+				  appear: {
+				    duration: 1200,
+				    easing: 'bounceOut'
+				  }
+				});
+
+				chart.render();
+}
+	
+
+</script>
 </html>

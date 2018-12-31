@@ -80,6 +80,101 @@ class UserHandler(tornado.web.RequestHandler):
         print("请求的头的信息为：",hinfo)
         self.finish({"message":"完成post请求"})
 '''
+class AntvHandler(tornado.web.RequestHandler):
+    def post(self):
+        print("antv业务报表功能")
+
+        method=self.get_argument("datas")
+        print("method-->",method)
+        if method=="queryclasstosex":
+            url="http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service=suds.client.Client(url)
+            data=service.service.queryClassToSex()
+            print("data-->",data)
+            print(type(data))
+            jsonDatas=json.loads(data)
+            print("jsonDatas-->",jsonDatas)
+            self.finish({"jsonDatas":jsonDatas})
+        elif method=="queryclasstopc":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryClassToPc()
+            print("data-->",data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->",jsonDatas)
+            self.finish({"jsonDatas":jsonDatas})
+        elif method == "queryagecount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryAgeCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+        elif method =="querynaplacecount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryNaplaceCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+
+        elif method == "queryprovcount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryProvCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+
+        elif method == "queryclaagecount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryClaAgeCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+
+        elif method == "querycitycount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryCityCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+
+        elif method == "queryclaprocount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryClaProCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+        elif method == "queryfoodcount":
+            url = "http://127.0.0.1:8100/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryFoodCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("jsonDatas-->", jsonDatas)
+            self.finish({"jsonDatas": jsonDatas})
+
+
+
+
 
 
  #设置配置项
@@ -90,9 +185,10 @@ settings={
 }
 
 #创建一个应用对象
-#包含路由
+#包含路由，请求的动作名对应着业务类
 app = tornado.web.Application([(r'/', IndexHandler),
                                (r'/user',UserHandler),
+                               (r'/antv',AntvHandler),
                                ],**settings)
 
 
@@ -102,10 +198,7 @@ if __name__=="__main__":
     app.listen(80)
     #启动web程序，开始监听端口的连接
     tornado.ioloop.IOLoop.current().start()
-
-
-
-
+#未完成的
 
 
 
